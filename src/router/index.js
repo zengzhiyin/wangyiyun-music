@@ -1,24 +1,33 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+
+const Discovery = () => import(/* webpackChunkName: "Discovery" */ '@/views/discovery')
+
+
+
+// 内容需要居中的页面
+export const layoutCenterNames = ['discovery', 'playlists', 'songs', 'mvs']
+// 需要显示在侧边栏菜单的页面
+export const menuRoutes = [
+  {
+    path: '/discovery',
+    name: 'discovery',
+    component: Discovery,
+    meta: {
+      title: '发现音乐',
+      icon: 'music',
+    },
+  }
+]
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
-    component: Home
+    path: '/',
+    redirect: '/discovery',
   },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
-  }
+  ...menuRoutes,
 ];
 
 const router = new VueRouter({
